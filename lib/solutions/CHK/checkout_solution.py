@@ -50,9 +50,9 @@ def checkout(skus: str) -> int:
 
     return total
 
-checkout("A")
-
-
-
+assert checkout("A") == 50
+assert checkout("AAA") == 130
+assert checkout("EEB") == 80
+assert checkout("BEE") == 80
 
 

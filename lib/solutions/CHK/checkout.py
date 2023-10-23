@@ -60,7 +60,8 @@ class Checkout:
         for sku, count in basket.items.items():
             product = self.products[sku]
             for offer in sorted(product.offers, key=lambda o: -o.discount_value()):
-                count = self.apply_offer(basket, product, offer, count)
+                remaining_count = self.apply_offer(basket, product, offer, count)
+                count = remaining_count
         
         return int(basket.total)
     
@@ -78,8 +79,11 @@ class Checkout:
             int: The remaining count of the product after applying offer
         """
         if offer.free_sku:
-            # Leave this out for now - not implemented
-            pass
+            free_product = self.products[offer.free_sku]
+            free_count = count // offer.required_quantity
+            basket.total -= free_count * free_product.price
+            basket.items[free_product.sku] -= free_count
+            return count
         # else:
         #     offer_count = count // offer.required_quantity
 
@@ -87,7 +91,3 @@ class Checkout:
     
 
                 
-
-
-
-

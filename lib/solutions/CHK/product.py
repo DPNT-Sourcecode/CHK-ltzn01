@@ -44,5 +44,3 @@ class Product:
         self.offers.append(offer)
 
 
-
-
