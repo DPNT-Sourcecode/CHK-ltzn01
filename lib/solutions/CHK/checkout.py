@@ -26,7 +26,7 @@ class Basket:
         self.items[product.sku] += 1
         self.total += product.price
 
-# Behavior-Oriented Class
+# Behavior-Oriented Class - think about splitting up
 class Checkout:
     """
     A class repesenting the checkout process
@@ -66,8 +66,18 @@ class Checkout:
             product (Product): The product the offer applies to.
             offer (Offer): The special offer.
             count (int): the quantity of the product in the basket.
+        
+        Returns:
+            int: The remaining count of the product after applying offer
         """
+        if offer.free_sku:
+            # Leave this out for now - not implemented
+            pass
+        # else:
+        #     offer_count = count // offer.required_quantity
+
 
     
 
                 
+
