@@ -56,6 +56,9 @@ class Checkout:
             if sku not in self.products:
                 return -1
             basket.add(self.products[sku])
+        
+        for sku, count in basket.items.items():
+            product = self.products[sku]
     
     def apply_offer(self, basket, product, offer, count):
         """
@@ -80,4 +83,5 @@ class Checkout:
     
 
                 
+
 

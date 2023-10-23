@@ -50,7 +50,8 @@ def checkout(skus: str) -> int:
 
     return total
 
-checkout("a")
+checkout("A")
+
 
 
 
