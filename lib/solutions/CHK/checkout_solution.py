@@ -8,7 +8,7 @@ def checkout(skus: str) -> int:
     Returns:
         int: The total checkout value of the items. Returns -1 for any illegal input.
     """
-    if not all(c in {'A', 'B', 'C', 'D'} for c in skus):
+    if not all(c in {'A', 'B', 'C', 'D', 'E'} for c in skus):
         return -1
     
     prices = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
@@ -30,6 +30,7 @@ def checkout(skus: str) -> int:
         total += count * price
 
     return total
+
 
 
 
