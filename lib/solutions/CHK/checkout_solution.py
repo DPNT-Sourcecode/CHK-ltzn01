@@ -15,11 +15,19 @@ def checkout(skus: str) -> int:
     for item in skus:
         counts[item] = counts.get(item, 0) + 1
     
+    # Calculate total cost for each item
     total = 0
     for item, count in counts.items():
         price = prices[item]
+        total += count * price
+        # Figure out way for offers
+        if item in offers:
+            print(item)
+            print(offers)
+    return total
 
 
 test_sku = "AAAB"
 checkout(test_sku)
+
 
