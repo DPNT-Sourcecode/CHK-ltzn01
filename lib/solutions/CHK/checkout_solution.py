@@ -1,8 +1,8 @@
 from product import Product, Offer
 from checkout import Checkout
-from basket import Basket
 
 
+# Think about putting these into some sort of JSON format?
 # Define the products
 product_a = Product('A', 50)
 product_b = Product('B', 30)
@@ -10,19 +10,28 @@ product_c = Product('C', 20)
 product_d = Product('D', 15)
 product_e = Product('E', 40)
 
-# Add Product A Details
+# Add Product A Offers
 offer_a1 = Offer(3, 130)
 offer_a2 = Offer(5, 200)
 product_a.add_offer(offer_a1)
 product_a.add_offer(offer_a2)
 
-# Add Product B Details
+# Add Product B Offers
 offer_b1 = Offer(2, 45)
 product_b.add_offer(offer_b1)
 
+# Add Product E Offers
+offer_e = Offer(2, 0, free_sku='B')
+product_e.add_offer(offer_e)
+
 
 # Define all products to checkout
-products = {product_a.sku: product_a, product_b.sku: product_b}
+products = {"A": product_a, 
+            "B": product_b,
+            "C": product_c,
+            "D": product_d,
+            "E": product_e
+}
 
 # Checkout
 Checkout = Checkout(products)
@@ -67,3 +76,4 @@ def checkout(skus: str) -> int:
     #     total += count * price
 
     # return total
+
