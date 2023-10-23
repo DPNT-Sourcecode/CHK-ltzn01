@@ -1,7 +1,8 @@
 from product import Product, Offer
+from checkout import Checkout
 
 
-
+# Define the products
 product_a = Product('A', 50)
 product_b = Product('B', 30)
 
@@ -11,10 +12,16 @@ offer_a2 = Offer(5, 200)
 product_a.add_offer(offer_a1)
 product_a.add_offer(offer_a2)
 
-offer_b = Offer(2, 45)
-
-
 # Add Product B Details
+offer_b1 = Offer(2, 45)
+product_b.add_offer(offer_b1)
+
+
+# Define all products to checkout
+products = {product_a.sku: product_a, product_b.sku: product_b}
+
+# Checkout
+Checkout = Checkout(products)
 
 
 
@@ -56,5 +63,6 @@ def checkout(skus: str) -> int:
     #     total += count * price
 
     # return total
+
 
 
