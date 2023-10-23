@@ -30,9 +30,3 @@ def checkout(skus: str) -> int:
         total += count * price
 
     return total
-
-
-
-
-
-
