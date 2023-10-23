@@ -1,30 +1,67 @@
 from collections import Counter
-from product import Product
+from product import Product, Offer
 
-# Data-Oriented Class
-class Basket:
-    """
-    A class representing a shopping basket.
+class Checkout:
 
-    Attributes:
-        items (Counter): A counter of the products in the basket
-        total (float): The total price of the products in the basket.
-    """
-
-    def __init__(self):
-        """Initialises a new empty basket."""
-        self.items = Counter()
-        self.total = 0
-
-    def add(self, product: Product) -> None:
+    def __init__(self, products):
         """
-        Add a product to a basket.
+        Initailises a new checkout instance
 
         Args:
-            product (Product): The product to be added.
+            products (dict): A dictionary of products available for checkout
         """
-        self.items[product.sku] += 1
-        self.total += product.price
+        self.products = products
+        self.basket = {}
+    
+    def calculate_total(self, skus):
+        """
+        Calculates the total price of the items in the basket.
+        """
+
+
+
+
+
+
+# # Data-Oriented Class
+# class Basket:
+#     """
+#     A class representing a shopping basket.
+
+#     Attributes:
+#         items (Counter): A counter of the products in the basket
+#         total (float): The total price of the products in the basket.
+#     """
+
+#     def __init__(self):
+#         """Initialises a new empty basket."""
+#         self.items = Counter()
+#         self.total = 0
+
+#     def add(self, product: Product) -> None:
+#         """
+#         Add a product to a basket.
+
+#         Args:
+#             product (Product): The product to be added.
+#         """
+#         self.items[product.sku] += 1
+#         self.total += product.price
+
+
+# class Checkout:
+
+#     def __init__(self, products):
+#         self.products = products
+#         self.offer_applier = 
+
+
+# class OfferApplier(products)
+
+
+
+
+
 
 # # Behavior-Oriented Class - think about splitting up
 # class Checkout:
@@ -91,3 +128,4 @@ class Basket:
     
 
                 
+
