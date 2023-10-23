@@ -5,6 +5,11 @@ class Offer:
         self.required_quantity = required_quantity
         self.discount_price = discount_price
         self.free_sku = free_sku
+    
+    def discount_value(self) -> float:
+        if self.free_sku:
+            return float('inf')
+        return self.required_quantity * self.discount_price
 
 # Data-Oriented Class
 class Product:
@@ -37,6 +42,7 @@ class Product:
             offer (Offer): The special offer to be added to the product.
         """
         self.offers.append(offer)
+
 
 
 
