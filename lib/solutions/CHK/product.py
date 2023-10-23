@@ -8,8 +8,7 @@ class Product:
     def add_offer(self, offer):
         self.offers.append(offer)
 
-# Is this the right design pattern? 
-# Is it easy to add certain aspects to offers?
+
 class Offer:
 
     def __init__(self, required_quantity, discount_price, free_sku=None):
