@@ -2,6 +2,12 @@
 def checkout(skus: str) -> int:
     """
     Calculate total price of a number of items.
+
+    Args:
+        skus (str): A string containing the SKUs of all the products in the basket.
+    
+    Returns:
+        int: The total checkout value of the items. Returns -1 for any illegal input.
     """
     # First validated the input
     if not all(c in {'A', 'B', 'C', 'D'} for c in skus):
@@ -22,12 +28,15 @@ def checkout(skus: str) -> int:
         total += count * price
         # Figure out way for offers
         if item in offers:
-            print(item)
-            print(offers)
+            offer_quantity, offer_price = offers[item]
+            offer_count = count // offer_quantity
+            total += offer_count * offer_price
+            count -= offer_count * offer_quantity
     return total
 
 
 test_sku = "AAAB"
-checkout(test_sku)
+print(checkout(test_sku))
+
 
 
