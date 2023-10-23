@@ -6,6 +6,9 @@ from basket import Basket
 # Define the products
 product_a = Product('A', 50)
 product_b = Product('B', 30)
+product_c = Product('C', 20)
+product_d = Product('D', 15)
+product_e = Product('E', 40)
 
 # Add Product A Details
 offer_a1 = Offer(3, 130)
@@ -64,7 +67,3 @@ def checkout(skus: str) -> int:
     #     total += count * price
 
     # return total
-
-
-
-
