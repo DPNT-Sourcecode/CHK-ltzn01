@@ -56,9 +56,19 @@ class Checkout:
             basket.add(self.products[sku])
     
     def apply_offer(self, basket, product, offer, count):
+        """
+        Applies a special offer to the products in the basket.
+
+        Args:
+            basket (Basket): The shopping basket.
+            product (Product): The product the offer applies to.
+            offer (Offer): The special offer.
+            count (int): the quantity of the product in the basket.
+        """
 
     
 
                 
+
 
 
