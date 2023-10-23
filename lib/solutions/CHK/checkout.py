@@ -1,4 +1,14 @@
-from basket import Basket
+from collections import Counter
+
+class Basket:
+
+    def __init__(self):
+        self.items = Counter()
+        self.total = 0
+
+    def add(self, product):
+        self.items[product.sku] += 1
+        self.total += product.price
 
 class Checkout:
 
@@ -11,3 +21,7 @@ class Checkout:
             if sku not in self.products:
                 return -1
             basket.add(self.products[sku])
+    
+    
+                
+

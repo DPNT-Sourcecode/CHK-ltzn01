@@ -1,5 +1,6 @@
 from product import Product, Offer
 from checkout import Checkout
+from basket import Basket
 
 
 # Define the products
@@ -63,6 +64,7 @@ def checkout(skus: str) -> int:
     #     total += count * price
 
     # return total
+
 
 
 
