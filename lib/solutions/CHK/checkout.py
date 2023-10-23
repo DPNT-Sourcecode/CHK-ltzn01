@@ -26,11 +26,29 @@ class Basket:
         self.total += product.price
 
 class Checkout:
+    """
+    A class repesenting the checkout process
+    """
 
     def __init__(self, products):
+        """
+        Initialises a new checkout with the given products.
+
+        Args:
+            products (dict of str: Product): A dictionary of products available.
+        """
         self.products = products
     
-    def calculate_total(self, skus):
+    def calculate_total(self, skus: str) -> int:
+        """
+        Calculate the total price of the products in the basket
+
+        Args:
+            skus (str): A string of SKUs representing the products in the basket.
+        
+            Returns:
+                Int: The total price of the products in the basket. Returns -1 for any illegal input.
+        """
         basket = Basket()
         for sku in skus:
             if sku not in self.products:
@@ -42,4 +60,5 @@ class Checkout:
     
 
                 
+
 
