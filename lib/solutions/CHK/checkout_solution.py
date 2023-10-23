@@ -1,3 +1,14 @@
+from product import Product, Offer
+
+
+
+product_a = Product('A', 50)
+
+offer_a = Offer(3, 130)
+product_a.add_offer(offer_a)
+
+
+
 def checkout(skus: str) -> int:
     """
     Calculate total price of a number of items.
@@ -8,25 +19,31 @@ def checkout(skus: str) -> int:
     Returns:
         int: The total checkout value of the items. Returns -1 for any illegal input.
     """
-    if not all(c in {'A', 'B', 'C', 'D', 'E'} for c in skus):
-        return -1
+
+
+    # if not all(c in {'A', 'B', 'C', 'D', 'E'} for c in skus):
+    #     return -1
     
-    prices = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
-    offers = {'A': (3, 130), 'B': (2, 45)}
-
-    counts = {}
-    for item in skus:
-        counts[item] = counts.get(item, 0) + 1
+    # # Need to add multiple offers for single item
+    # # Object Oriented Style?
     
-    total = 0
-    for item, count in counts.items():
-        price = prices[item]
+    # prices = {'A': 50, 'B': 30, 'C': 20, 'D': 15}
+    # offers = {'A': (3, 130), 'B': (2, 45)}
 
-        if item in offers:
-            offer_quantity, offer_price = offers[item]
-            offer_count = count // offer_quantity
-            total += offer_count * offer_price
-            count -= offer_count * offer_quantity
-        total += count * price
+    # counts = {}
+    # for item in skus:
+    #     counts[item] = counts.get(item, 0) + 1
+    
+    # total = 0
+    # for item, count in counts.items():
+    #     price = prices[item]
 
-    return total
+    #     if item in offers:
+    #         offer_quantity, offer_price = offers[item]
+    #         offer_count = count // offer_quantity
+    #         total += offer_count * offer_price
+    #         count -= offer_count * offer_quantity
+    #     total += count * price
+
+    # return total
+
