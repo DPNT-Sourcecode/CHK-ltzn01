@@ -11,4 +11,3 @@ def hello(friend_name: str) -> str:
     if not friend_name:
         raise ValueError("Friend name cannot be empty")
     return f"Hello, {friend_name}!"
-
