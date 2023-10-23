@@ -8,5 +8,4 @@ def hello(friend_name: str) -> str:
     Returns:
         str: A greeting message.
     """
-    return "hello to the world!"
-
+    return "Hello, World!"
