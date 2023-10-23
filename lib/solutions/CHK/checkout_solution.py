@@ -1,4 +1,3 @@
-
 def checkout(skus: str) -> int:
     """
     Calculate total price of a number of items.
@@ -22,13 +21,16 @@ def checkout(skus: str) -> int:
     total = 0
     for item, count in counts.items():
         price = prices[item]
+
         if item in offers:
             offer_quantity, offer_price = offers[item]
             offer_count = count // offer_quantity
             total += offer_count * offer_price
             count -= offer_count * offer_quantity
         total += count * price
+
     return total
+
 
 
 
