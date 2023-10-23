@@ -41,10 +41,6 @@ class Checkout:
         """
         self.products = products
     
-    @staticmethod
-    def discount_value(offer):
-        return -offer.discount_value()
-    
     def calculate_total(self, skus: str) -> int:
         """
         Calculate the total price of the products in the basket
@@ -63,7 +59,7 @@ class Checkout:
         
         for sku, count in basket.items.items():
             product = self.products[sku]
-            for offer in sorted(product.offers, key=self.discount_value):
+            for offer in sorted(product.offers, key=lambda o: -o.discount_value()):
                 count = self.apply_offer(basket, product, offer, count)
         
         return int(basket.total)
@@ -91,6 +87,7 @@ class Checkout:
     
 
                 
+
 
 
 
