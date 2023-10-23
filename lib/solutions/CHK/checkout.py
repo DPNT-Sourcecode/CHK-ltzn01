@@ -1,6 +1,7 @@
 from collections import Counter
 from product import Product
 
+# Data-Oriented Class
 class Basket:
     """
     A class representing a shopping basket.
@@ -25,6 +26,7 @@ class Basket:
         self.items[product.sku] += 1
         self.total += product.price
 
+# Behavior-Oriented Class
 class Checkout:
     """
     A class repesenting the checkout process

@@ -1,3 +1,4 @@
+# Behaviour-Oriented Class
 class Offer:
 
     def __init__(self, required_quantity, discount_price, free_sku=None):
@@ -5,7 +6,7 @@ class Offer:
         self.discount_price = discount_price
         self.free_sku = free_sku
 
-
+# Data-Oriented Class
 class Product:
     """
     Represents a product in a supermarket.
@@ -36,5 +37,6 @@ class Product:
             offer (Offer): The special offer to be added to the product.
         """
         self.offers.append(offer)
+
 
 
