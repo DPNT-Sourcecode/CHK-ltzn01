@@ -1,9 +1,6 @@
 from product import Product, Offer
 from checkout import Checkout
 
-
-
-
 def checkout(skus: str) -> int:
     """
     Calculate total price of a number of items.
@@ -47,7 +44,14 @@ def checkout(skus: str) -> int:
     }
 
     # Checkout
-    Checkout = Checkout(products)
+    checkout_instance = Checkout(products)
+
+    total = checkout_instance.calculate_total(skus)
+
+    return total
+
+checkout("a")
+
 
 
 
