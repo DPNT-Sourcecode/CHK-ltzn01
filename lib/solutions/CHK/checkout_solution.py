@@ -3,9 +3,19 @@ from product import Product, Offer
 
 
 product_a = Product('A', 50)
+product_b = Product('B', 30)
 
-offer_a = Offer(3, 130)
-product_a.add_offer(offer_a)
+# Add Product A Details
+offer_a1 = Offer(3, 130)
+offer_a2 = Offer(5, 200)
+product_a.add_offer(offer_a1)
+product_a.add_offer(offer_a2)
+
+offer_b = Offer(2, 45)
+
+
+# Add Product B Details
+
 
 
 
@@ -46,4 +56,5 @@ def checkout(skus: str) -> int:
     #     total += count * price
 
     # return total
+
 
