@@ -8,4 +8,7 @@ def hello(friend_name: str) -> str:
     Returns:
         str: A greeting message.
     """
-    return "Hello, World!"
+    if not friend_name:
+        raise ValueError("Friend name cannot be empty")
+    return f"Hello, {friend_name}!"
+
