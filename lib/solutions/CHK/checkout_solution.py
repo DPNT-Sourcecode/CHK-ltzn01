@@ -306,7 +306,7 @@ class OptimisedAnalysis(Analysis):
 ############################################ checkout.py ###########################################
 ####################################################################################################
 
-class Checkout:
+class CheckoutProcess:
     """
     Manages the checkout process.
     """
@@ -420,14 +420,14 @@ def checkout(skus: str) -> int:
     ]
     
  
-    checkout = Checkout(basket, OptimisedAnalysis(), discount_strategies)
-    checkout.run_analysis()
+    checkoutObject = CheckoutProcess(basket, OptimisedAnalysis(), discount_strategies)
+    checkoutObject.run_analysis()
 
-    print(int(round(checkout.total_price(), 0)))
+    print(int(round(checkoutObject.total_price(), 0)))
 
-    return int(round(checkout.total_price(), 0))
+    return int(round(checkoutObject.total_price(), 0))
 
-# # The below work
+# # # The below work
 assert checkout('BEBEEE') == 160
 assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
 assert checkout('EEEEBB') == 160
