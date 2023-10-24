@@ -195,17 +195,19 @@ class FreeItemDiscount(DiscountStrategy):
                     trigger_count += 1
                     if trigger_count == self.trigger_quantity:
                         break
-            # If the product is already in the basket, we don't want to add it again
-            # but we do want to update the price. It must not have been discounted before.
+
+            # Try to find and discount an existing product in the basket
             for product in basket.products:
                 if product.sku == self.discounted_item.sku and not product.discounted:
                     product.discounted_price = 0
                     product.discounted = True
-                    break
-            # If the Product is not in the basket, we want to add it
-            self.discounted_item.discounted_price = 0
-            self.discounted_item.discounted = True
-            basket.add_product(self.discounted_item)
+                    return
+
+            # If the product is not in the basket or all instances are already discounted, add a new discounted item
+            discounted_item_copy = copy.deepcopy(self.discounted_item)
+            discounted_item_copy.discounted_price = 0
+            discounted_item_copy.discounted = True
+            basket.add_product(discounted_item_copy)
 
 
 ####################################################################################################
@@ -422,4 +424,5 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
+assert checkout('BEBEEE') == 160
 
