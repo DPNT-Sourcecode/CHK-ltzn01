@@ -1,8 +1,7 @@
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
-from typing import List, Optional
+from typing import List, Optional, Dict, Set
 import copy
-from itertools import permutations
 
 # File imports are not working for Accelerate Runner
 # All code will have to be on this single file
@@ -233,93 +232,62 @@ class Analysis(ABC):
         """
         pass
 
-
-class BruteForceAnalysis(Analysis):
-    """
-    A brute force analysis strategy that triers all possible permutations of discount strategies
-    """
-
-    def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
-        """
-        Performs a brute force analysis on the basket to find the optimal combinations of discounts.
-
-        Args:
-            basket: The basket to run the analysis on.
-            discount_strategies: The lsit of discount strategies to apply to the basket.
-        
-        Returns:
-            The basket after the analysis has been run.
-        """
-        min_price = float('inf')
-        best_basket = None
-
-        # Only include relevant discount strategies
-        relevant_strategies = []
-        for strategy in discount_strategies:
-            if self.is_relevant(strategy, basket):
-                relevant_strategies.append(strategy)
-
-        for perm in permutations(relevant_strategies):
-            basket_copy = copy.deepcopy(basket)
-            for discount_strategy in perm:
-                while discount_strategy.is_applicable(basket_copy):
-                    discount_strategy.apply_discount(basket_copy)
-            
-            total_price = sum(product.discounted_price for product in basket_copy.products)
-            if total_price < min_price:
-                min_price = total_price
-                best_basket = basket_copy
-        return best_basket
+class OptimisedAnalysis(Analysis):
 
     @staticmethod
-    def is_relevant(discount_strategy: DiscountStrategy, basket: Basket) -> bool:
+    def categorise_discount_strategies(discount_strategies: List[DiscountStrategy]) -> Dict[str, List[DiscountStrategy]]:
         """
-        Determine if a discount strategy is relevant
+        Catergorise the discount strategies based in the items they affect.
 
         Args:
-            discount_strategy: The discount strategy to evaluate
-            basket: The basket to evaluate
+            discount_strategies: List of discount strategies.
+        """
+        strategies_dict = {}
+        for strategy in sorted(discount_strategies, key=lambda x: x.trigger_quantity, reverse=True):
+            letter = strategy.letter_affected
+            if letter not in strategies_dict:
+                strategies_dict[letter] = []
+            strategies_dict[letter].append(strategy)
+        return strategies_dict
+    
+    @staticmethod
+    def get_basket_letters(basket: Basket) -> Set[str]:
+        """
+        Get a set of unique letters representing items in the basket.
+
+        Args:
+            basket: The basket of items.
         
         Returns:
-            A boolean indicating if relevant
+            A set of unique letters
         """
-        for product in basket.products:
-            if discount_strategy.is_applicable(basket):
-                return True
-        return False
+        return {product.sku for product in basket.products}
 
-class IterativeAnalysis(Analysis):
-    """
-    An analysis strategy that iteratively goes through the basket and applies each discount strategy.
-    """
+    @staticmethod
+    def apply_discounts(basket: Basket, strategies_dict: Dict[str, List[DiscountStrategy]], basket_letters: Set[str]) -> Basket:
+        """
+        Apply discount strategies to the basket.
+
+        Args:
+            basket: The basket of items.
+            strategies_dict: A dictionary of discount strategies categorised by letters.
+            basket_letters: A set of unique letters representing items in the basket.
+        
+        Returns:
+            The basket after applying the discounts.
+        """
+        for letter in basket_letters:
+            if letter in strategies_dict:
+                for strategy in strategies_dict[letter]:
+                    while strategy.is_applicable(basket):
+                        strategy.apply_discount(basket)
+        return basket
 
     def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
-        """
-        Performs an analysis on the basket by iteratively applying discount
-
-        Args:
-            basket: The basket to run the analysis on.
-            discount_strategies: the list of discount strategies to apply.
-        
-        Returns:
-            The basket after the analysis has been run.
-        """
-        for discount_strategy in discount_strategies:
-            if discount_strategy.is_applicable(basket):
-                discount_strategy.apply_discount(basket)
-        return basket
-        # while True:
-        #     discounts_applied = 0
-        #     for discount_strategy in discount_strategies:
-        #         if discount_strategy.is_applicable(basket):
-        #             discount_strategy.apply_discount(basket)
-        #             discounts_applied += 1
-            
-        #     if discounts_applied == 0:
-        #         break
-        # return basket
-
-
+        strategies_dict = self.categorise_discount_strategies(discount_strategies)
+        basket.products.sort(key=lambda x: x.sku)
+        basket_letters = self.get_basket_letters(basket)
+        return self.apply_discounts(basket, strategies_dict, basket_letters)
 
 
 ####################################################################################################
@@ -494,3 +462,4 @@ def checkout(skus: str) -> int:
 
 
 assert checkout("VVV") == 130
+
