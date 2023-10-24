@@ -52,7 +52,7 @@ class Basket:
         Args:
             product: The product to add to the basket
         """
-        product_copy = copy.copy(product)
+        product_copy = copy.deepcopy(product)
         self.products.append(product_copy)
     
     def remove_product(self, product: Item):
@@ -423,5 +423,6 @@ def checkout(skus: str) -> int:
 
     return int(round(checkout.total_price(), 0))
 
-assert checkout('BEBEEE') == 160
+# The below work
+# assert checkout('BEBEEE') == 160
 # assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
