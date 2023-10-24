@@ -251,9 +251,12 @@ class BruteForceAnalysis(Analysis):
         best_basket = None
 
         # Only include relevant discount strategies
+        relevant_strategies = []
+        for strategy in discount_strategies:
+            if self.is_relevant(strategy, basket):
+                relevant_strategies.append(strategy)
 
-
-        for perm in permutations(discount_strategies):
+        for perm in permutations(relevant_strategies):
             basket_copy = copy.deepcopy(basket)
             for discount_strategy in perm:
                 while discount_strategy.is_applicable(basket_copy):
@@ -457,6 +460,7 @@ def checkout(skus: str) -> int:
 
 
 assert checkout("PPPPP") == 200
+
 
 
 
