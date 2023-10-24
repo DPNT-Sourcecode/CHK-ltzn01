@@ -1,5 +1,3 @@
-# from product import Product, Offer
-# from checkout import Checkout
 
 def checkout(skus: str) -> int:
     """
@@ -55,5 +53,6 @@ def checkout(skus: str) -> int:
 # assert checkout("AAA") == 130
 # assert checkout("EEB") == 80
 # assert checkout("BEE") == 80
+
 
 
