@@ -404,7 +404,7 @@ def checkout(skus: str) -> int:
         BulkDiscount(main_dict['H'], 5, 45),
         BulkDiscount(main_dict['H'], 10, 80),
         BulkDiscount(main_dict['K'], 2, 150),
-        BulkDiscount(main_dict['N'], 3, 120),
+        FreeItemDiscount(main_dict['N'], 3, main_dict['M']),
         BulkDiscount(main_dict['P'], 5, 200),
         BulkDiscount(main_dict['Q'], 3, 80),
         FreeItemDiscount(main_dict['R'], 3, main_dict['Q']),
@@ -420,5 +420,6 @@ def checkout(skus: str) -> int:
     print(int(round(checkout.total_price(), 0)))
 
     return int(round(checkout.total_price(), 0))
+
 
 
