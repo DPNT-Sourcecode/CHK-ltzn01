@@ -284,6 +284,16 @@ class OptimisedAnalysis(Analysis):
         return basket
 
     def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
+        """
+        Runs the analysis.
+
+        Args:
+            basket: The basket of items.
+            discount_strategies: A list of discount strategies to apply to the basket.
+        
+        Returns:
+            The basket after the analysis has been run.
+        """
         strategies_dict = self.categorise_discount_strategies(discount_strategies)
         basket.products.sort(key=lambda x: x.sku)
         basket_letters = self.get_basket_letters(basket)
@@ -373,7 +383,7 @@ def checkout(skus: str) -> int:
         'W': Item('W', 20),
         'X': Item('X', 90),
         'Y': Item('Y', 10),
-        'Z': Item('Z', 50),
+        'Z': Item('Z', 50)
     }
 
 
@@ -400,7 +410,7 @@ def checkout(skus: str) -> int:
         FreeItemDiscount(main_dict['R'], 3, main_dict['Q']),
         FreeItemDiscount(main_dict['U'], 3, main_dict['U']),
         BulkDiscount(main_dict['V'], 2, 90),
-        BulkDiscount(main_dict['V'], 3, 130),
+        BulkDiscount(main_dict['V'], 3, 130)
     ]
     
  
