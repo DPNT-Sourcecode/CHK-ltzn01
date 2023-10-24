@@ -301,16 +301,20 @@ class IterativeAnalysis(Analysis):
         Returns:
             The basket after the analysis has been run.
         """
-        while True:
-            discounts_applied = 0
-            for discount_stragy in discount_strategies:
-                if discount_stragy.is_applicable(basket):
-                    discount_stragy.apply_discount(basket)
-                    discounts_applied += 1
-            
-            if discounts_applied == 0:
-                break
+        for discount_strategy in discount_strategies:
+            if discount_strategy.is_applicable(basket):
+                discount_strategy.apply_discount(basket)
         return basket
+        # while True:
+        #     discounts_applied = 0
+        #     for discount_strategy in discount_strategies:
+        #         if discount_strategy.is_applicable(basket):
+        #             discount_strategy.apply_discount(basket)
+        #             discounts_applied += 1
+            
+        #     if discounts_applied == 0:
+        #         break
+        # return basket
 
 
 
