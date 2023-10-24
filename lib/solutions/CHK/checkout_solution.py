@@ -57,4 +57,3 @@ def checkout(skus: str) -> int:
 # assert checkout("BEE") == 80
 
 
-
