@@ -427,7 +427,7 @@ def checkout(skus: str) -> int:
 
     return int(round(checkout.total_price(), 0))
 
-# The below work
+# # The below work
 assert checkout('BEBEEE') == 160
 assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
 assert checkout('EEEEBB') == 160
