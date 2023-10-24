@@ -357,7 +357,10 @@ def checkout(skus: str) -> int:
     return int(checkout.total_price())
         
 
-print(checkout("A"))
+assert checkout('AAA') == 130
+assert checkout('EEB') == 80
+assert checkout('BEE') == 80
+
 
 
 
