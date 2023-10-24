@@ -86,6 +86,10 @@ class DiscountStrategy(ABC):
         trigger_quantity: The quantity of items required to trigger the discount.
         bulk_price: The price of the item when the discount is triggered
     """
+    def __init__(self, item: Item, trigger_quantity: int):
+        self.item = item
+        self.trigger_quantity = trigger_quantity
+        self.letter_affected = item.sku
 
     @abstractmethod
     def is_applicable(self, basket: 'Basket') -> bool:
@@ -112,9 +116,9 @@ class BulkDiscount(DiscountStrategy):
     """
 
     def __init__(self, item: Item, trigger_quantity: int, bulk_price: float):
-        self.item = item
-        self.trigger_quantity = trigger_quantity
+        super().__init__(item, trigger_quantity)
         self.bulk_price = bulk_price
+        self.letter_affected = item.sku
     
     def is_applicable(self, basket: Basket) -> bool:
         """
@@ -153,22 +157,21 @@ class FreeItemDiscount(DiscountStrategy):
     Discount strategy for applying a buy x get y free discount.
 
     Attributes:
-        trigger_item: The item that triggers the discount.
+        item: The item that triggers the discount.
         trigger_quantity: The quantity of trigger items required to trigger the discount.
         discounted_item: THe item that is discounted.
     """
 
-    def __init__(self, trigger_item: Item, trigger_quantity: int, discounted_item: Item):
+    def __init__(self, item: Item, trigger_quantity: int, discounted_item: Item):
         """
         Initialise the free item discount.
 
         Args:
-            trigger_item: The item that triggers the discount.
+            item: The item that triggers the discount.
             trigger_quantity: The quantity of trigger items required to trigger the discount.
             discounted_item: The item that is discounted.
         """
-        self.trigger_item = trigger_item
-        self.trigger_quantity = trigger_quantity
+        super().__init__(item, trigger_quantity)
         self.discounted_item = discounted_item
     
     def is_applicable(self, basket: Basket) -> bool:
@@ -180,7 +183,7 @@ class FreeItemDiscount(DiscountStrategy):
         """
         trigger_count = 0
         for product in basket.products:
-            if product.sku == self.trigger_item.sku and not product.discounted:
+            if product.sku == self.item.sku and not product.discounted:
                 trigger_count += 1
         return trigger_count >= self.trigger_quantity
     
@@ -188,7 +191,7 @@ class FreeItemDiscount(DiscountStrategy):
         if self.is_applicable(basket):
             trigger_count = 0
             for product in basket.products:
-                if product.sku == self.trigger_item.sku and not product.discounted:
+                if product.sku == self.item.sku and not product.discounted:
                     product.discounted = True
                     trigger_count += 1
                     if trigger_count == self.trigger_quantity:
