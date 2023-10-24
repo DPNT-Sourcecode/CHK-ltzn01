@@ -203,11 +203,11 @@ class FreeItemDiscount(DiscountStrategy):
                     product.discounted = True
                     return
 
-            # # If the product is not in the basket or all instances are already discounted, add a new discounted item
-            # discounted_item_copy = copy.deepcopy(self.discounted_item)
-            # discounted_item_copy.discounted_price = 0
-            # discounted_item_copy.discounted = True
-            # basket.add_product(discounted_item_copy)
+            # If the product is not in the basket or all instances are already discounted, add a new discounted item
+            discounted_item_copy = copy.deepcopy(self.discounted_item)
+            discounted_item_copy.discounted_price = 0
+            discounted_item_copy.discounted = True
+            basket.add_product(discounted_item_copy)
 
 
 ####################################################################################################
@@ -424,6 +424,6 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
-assert checkout('EEEEBB') == 160
+assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1895
 
 
