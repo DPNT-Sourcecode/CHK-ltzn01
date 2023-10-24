@@ -285,6 +285,33 @@ class BruteForceAnalysis(Analysis):
                 return True
         return False
 
+class IterativeAnalysis(Analysis):
+    """
+    An analysis strategy that iteratively goes through the basket and applies each discount strategy.
+    """
+
+    def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
+        """
+        Performs an analysis on the basket by iteratively applying discount
+
+        Args:
+            basket: The basket to run the analysis on.
+            discount_strategies: the list of discount strategies to apply.
+        
+        Returns:
+            The basket after the analysis has been run.
+        """
+        while True:
+            discounts_applied = 0
+            for discount_stragy in discount_strategies:
+                if discount_stragy.is_applicable(basket):
+                    discount_stragy.apply_discount(basket)
+                    discounts_applied += 1
+            
+            if discounts_applied == 0:
+                break
+        return basket
+
 
 
 
@@ -457,6 +484,7 @@ def checkout(skus: str) -> int:
     checkout.run_analysis()
 
     return int(round(checkout.total_price(), 0))
+
 
 
 
