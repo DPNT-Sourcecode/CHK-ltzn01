@@ -388,14 +388,18 @@ def checkout(skus: str) -> int:
         'Z': Item('Z', 50)
     }
 
+    fresh_main_dict = {}
+    for sku, item in main_dict.items():
+        fresh_main_dict[sku] = copy.deepcopy(item)
+
 
     # Initialise the basket
     basket = Basket()
 
     for sku in skus:
-        if sku not in main_dict:
+        if sku not in fresh_main_dict:
             return -1
-        basket.add_product(main_dict[sku])
+        basket.add_product(fresh_main_dict[sku])
 
     discount_strategies = [
         BulkDiscount(main_dict['A'], 3, 130),
