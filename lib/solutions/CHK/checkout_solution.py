@@ -154,6 +154,11 @@ class BulkDiscount(DiscountStrategy):
 class FreeItemDiscount(DiscountStrategy):
     """
     Discount strategy for applying a buy x get y free discount.
+
+    Attributes:
+        item: The item that triggers the discount.
+        trigger_quantity: The quantity of trigger items required to trigger the discount.
+        discounted_item: THe item that is discounted.
     """
 
     def __init__(self, item: Item, trigger_quantity: int, discounted_item: Item):
@@ -176,13 +181,10 @@ class FreeItemDiscount(DiscountStrategy):
             basket: The basket to check for applicability
         """
         trigger_count = 0
-        discounted_item_count = 0
         for product in basket.products:
             if product.sku == self.item.sku and not product.discounted:
                 trigger_count += 1
-            if product.sku == self.discounted_item.sku and not product.discounted:
-                discounted_item_count += 1
-        return trigger_count >= self.trigger_quantity and discounted_item_count >= 1
+        return trigger_count >= self.trigger_quantity
     
     def apply_discount(self, basket: Basket) -> None:
         if self.is_applicable(basket):
@@ -200,6 +202,12 @@ class FreeItemDiscount(DiscountStrategy):
                     product.discounted_price = 0
                     product.discounted = True
                     return
+
+            # # If the product is not in the basket or all instances are already discounted, add a new discounted item
+            # discounted_item_copy = copy.deepcopy(self.discounted_item)
+            # discounted_item_copy.discounted_price = 0
+            # discounted_item_copy.discounted = True
+            # basket.add_product(discounted_item_copy)
 
 
 ####################################################################################################
@@ -416,5 +424,6 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
+assert checkout('EEEEBB') == 160
 
 
