@@ -328,6 +328,27 @@ def checkout(skus: str) -> int:
     item_d = Item('D', 15)
     item_e = Item('E', 40)
     item_f = Item('F', 10)
+    item_g = Item('G', 20)
+    item_h = Item('H', 10)
+    item_i = Item('I', 35)
+    item_j = Item('J', 60)
+    item_k = Item('K', 80)
+    item_l = Item('L', 90)
+    item_m = Item('M', 15)
+    item_n = Item('N', 40)
+    item_o = Item('O', 10)
+    item_p = Item('P', 50)
+    item_q = Item('Q', 30)
+    item_r = Item('R', 50)
+    item_s = Item('S', 30)
+    item_t = Item('T', 20)
+    item_u = Item('U', 40)
+    item_v = Item('V', 50)
+    item_w = Item('W', 20)
+    item_x = Item('X', 90)
+    item_y = Item('Y', 10)
+    item_z = Item('Z', 50)
+
 
     # Initialise the basket
     basket = Basket()
@@ -346,6 +367,46 @@ def checkout(skus: str) -> int:
             basket.add_product(item_e)
         elif letter == item_f.sku:
             basket.add_product(item_f)
+        elif letter == item_g.sku:
+            basket.add_product(item_g)
+        elif letter == item_h.sku:
+            basket.add_product(item_h)
+        elif letter == item_i.sku:
+            basket.add_product(item_i)
+        elif letter == item_j.sku:
+            basket.add_product(item_j)
+        elif letter == item_k.sku:
+            basket.add_product(item_k)
+        elif letter == item_l.sku:
+            basket.add_product(item_l)
+        elif letter == item_m.sku:
+            basket.add_product(item_m)
+        elif letter == item_n.sku:
+            basket.add_product(item_n)
+        elif letter == item_o.sku:
+            basket.add_product(item_o)
+        elif letter == item_p.sku:
+            basket.add_product(item_p)
+        elif letter == item_q.sku:
+            basket.add_product(item_q)
+        elif letter == item_r.sku:
+            basket.add_product(item_r)
+        elif letter == item_s.sku:
+            basket.add_product(item_s)
+        elif letter == item_t.sku:
+            basket.add_product(item_t)
+        elif letter == item_u.sku:
+            basket.add_product(item_u)
+        elif letter == item_v.sku:
+            basket.add_product(item_v)
+        elif letter == item_w.sku:
+            basket.add_product(item_w)
+        elif letter == item_x.sku:
+            basket.add_product(item_x)
+        elif letter == item_y.sku:
+            basket.add_product(item_y)
+        elif letter == item_z.sku:
+            basket.add_product(item_z)
         else:
             return -1
     
@@ -353,12 +414,26 @@ def checkout(skus: str) -> int:
     a_discount_1 = BulkDiscount(item_a, 3, 130)
     a_discount_2 = BulkDiscount(item_a, 5, 200)
     b_discount_1 = BulkDiscount(item_b, 2, 45)
-    e_discount = FreeItemDiscount(item_e, 2, item_b)
+    e_discount_1 = FreeItemDiscount(item_e, 2, item_b)
     f_discount_1 = FreeItemDiscount(item_f, 2, item_f)
+    h_discount_1 = BulkDiscount(item_h, 5, 45)
+    h_discount_2 = BulkDiscount(item_h, 10, 80)
+    k_discount_1 = BulkDiscount(item_k, 2, 150)
+    n_discount_1 = BulkDiscount(item_n, 3, item_m)
+    p_discount_1 = BulkDiscount(item_p, 5, 200)
+    q_discount_1 = BulkDiscount(item_q, 3, 80)
+    r_discount_1 = FreeItemDiscount(item_r, 3, item_q)
+    u_discount_1 = FreeItemDiscount(item_u, 3, item_u)
+    v_discount_1 = BulkDiscount(item_v, 2, 90)
+    v_discount_2 = BulkDiscount(item_v, 3, 130)
 
-    checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount, f_discount_1])
+    checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount_1, 
+                                                       f_discount_1, h_discount_1, h_discount_2, k_discount_1, 
+                                                       n_discount_1, p_discount_1, q_discount_1, r_discount_1, 
+                                                       u_discount_1, v_discount_1, v_discount_2])
     checkout.run_analysis()
 
     return int(round(checkout.total_price(), 0))
+
 
 
