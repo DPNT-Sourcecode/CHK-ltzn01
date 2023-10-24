@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from typing import List, Optional
 import copy
+from itertools import permutations
 
 # File imports are not working for Accelerate Runner
 # All code will have to be on this single file
@@ -210,7 +211,56 @@ class FreeItemDiscount(DiscountStrategy):
 ####################################################################################################
 
 
+class Analysis(ABC):
+    """
+    Abstract base class for various analysis strategies
+    """
 
+    @abstractmethod
+    def run(self, basket: Basket, discount_strategies: list[DiscountStrategy]) -> Basket:
+        """
+        Execute the analysis strategy.
+
+        Args:
+            basket: The basket to run the analysis on.
+            discount_strategies: The list of discount strategies to apply to the basket.
+        
+        Returns:
+            The basket after the analysis has been run
+        """
+        pass
+
+
+class BruteForceAnalysis(Analysis):
+    """
+    A brute force analysis strategy that triers all possible permutations of discount strategies
+    """
+
+    def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
+        """
+        Performs a brute force analysis on the basket to find the optimal combinations of discounts.
+
+        Args:
+            basket: The basket to run the analysis on.
+            discount_strategies: The lsit of discount strategies to apply to the basket.
+        
+        Returns:
+            The basket after the analysis has been run.
+        """
+        min_price = float('inf')
+        best_basket = None
+
+        for perm in permutations(discount_strategies):
+            basket_copy = copy.deepcopy(basket)
+            for discount_strategy in perm:
+                while discount_strategy.is_applicable(basket_copy):
+                    discount_strategy.apply_discount(basket_copy)
+            
+            total_price = sum(product.discounted_price for product in basket_copy.products)
+            if total_price < min_price:
+                min_price = total_price
+                best_basket = basket_copy
+        return best_basket
 
 
 
@@ -272,6 +322,7 @@ def checkout(skus: str) -> int:
 
     # return total
 print(checkout("A"))
+
 
 
 
