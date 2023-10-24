@@ -45,6 +45,22 @@ class Basket:
         """
         product_copy = copy.copy(product)
         self.products.append(product_copy)
+    
+    def remove_product(self, product: Item):
+        """
+        Remove a product from the basket.
+
+        Args:
+            product: The product to remove from the basket.
+        """
+        self.products.remove(product)
+    
+    def view_products(self):
+        """
+        Print details of all products in the basket
+        """
+        for product in self.products:
+            print(product.sku, product.price)
 
 
     

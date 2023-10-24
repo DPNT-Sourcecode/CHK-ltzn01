@@ -1,3 +1,8 @@
+# File imports are not working for Accelerate Runner
+# All code will have to be on this single file
+
+from items import Item, Basket
+
 
 def checkout(skus: str) -> int:
     """
@@ -9,7 +14,8 @@ def checkout(skus: str) -> int:
     Returns:
         int: The total checkout value of the items. Returns -1 for any illegal input.
     """
-    pass
+    item_a = Item('A', 50)
+    print(item_a)
 
     # # Think about putting these into some sort of JSON format?
     # # Define the products
@@ -48,11 +54,7 @@ def checkout(skus: str) -> int:
     # total = checkout_instance.calculate_total(skus)
 
     # return total
-
-# assert checkout("A") == 50
-# assert checkout("AAA") == 130
-# assert checkout("EEB") == 80
-# assert checkout("BEE") == 80
+print(checkout("A"))
 
 
 
