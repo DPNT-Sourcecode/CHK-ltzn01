@@ -490,4 +490,4 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
-assert checkout("VV") == 90
+assert checkout("VVV") == 130
