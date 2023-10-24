@@ -354,5 +354,9 @@ def checkout(skus: str) -> int:
     checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount])
     checkout.run_analysis()
 
-    return int(checkout.total_price())
+    print(checkout.total_price())
+
+    return int(round(checkout.total_price(), 0))
+
+assert checkout("AAAAAEEBAAABB") == 455
 
