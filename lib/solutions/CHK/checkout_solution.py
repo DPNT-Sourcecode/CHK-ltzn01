@@ -490,10 +490,3 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
-
-
-
-
-
-
-
