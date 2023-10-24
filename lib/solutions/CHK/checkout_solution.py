@@ -355,16 +355,4 @@ def checkout(skus: str) -> int:
     checkout.run_analysis()
 
     return int(checkout.total_price())
-        
-
-assert checkout('AAA') == 130
-assert checkout('EEB') == 80
-assert checkout('BEE') == 80
-
-
-
-
-
-
-
 
