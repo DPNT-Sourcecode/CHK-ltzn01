@@ -250,6 +250,9 @@ class BruteForceAnalysis(Analysis):
         min_price = float('inf')
         best_basket = None
 
+        # Only include relevant discount strategies
+
+
         for perm in permutations(discount_strategies):
             basket_copy = copy.deepcopy(basket)
             for discount_strategy in perm:
@@ -261,6 +264,23 @@ class BruteForceAnalysis(Analysis):
                 min_price = total_price
                 best_basket = basket_copy
         return best_basket
+
+    @staticmethod
+    def is_relevant(discount_strategy: DiscountStrategy, basket: Basket) -> bool:
+        """
+        Determine if a discount strategy is relevant
+
+        Args:
+            discount_strategy: The discount strategy to evaluate
+            basket: The basket to evaluate
+        
+        Returns:
+            A boolean indicating if relevant
+        """
+        for product in basket.products:
+            if discount_strategy.is_applicable(product):
+                return True
+        return False
 
 
 
@@ -437,6 +457,7 @@ def checkout(skus: str) -> int:
 
 
 assert checkout("PPPPP") == 200
+
 
 
 
