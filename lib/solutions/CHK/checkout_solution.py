@@ -194,7 +194,25 @@ class FreeItemDiscount(DiscountStrategy):
                         break
             # If the product is already in the basket, we don't want to add it again
             # but we do want to update the price. It must not have been discounted before.
-            for product
+            for product in basket.products:
+                if product.sku == self.discounted_item.sku and not product.discounted:
+                    product.discounted_price = 0
+                    product.discounted = True
+                    break
+            # If the Product is not in the basket, we want to add it
+            self.discounted_item.discounted_price = 0
+            self.discounted_item.discounted = True
+            basket.add_product(self.discounted_item)
+
+
+####################################################################################################
+############################################ analysis.py ###########################################
+####################################################################################################
+
+
+
+
+
 
 
 ####################################################################################################
@@ -254,6 +272,7 @@ def checkout(skus: str) -> int:
 
     # return total
 print(checkout("A"))
+
 
 
 
