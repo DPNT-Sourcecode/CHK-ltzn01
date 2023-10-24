@@ -331,38 +331,34 @@ def checkout(skus: str) -> int:
     # Initialise the basket
     basket = Basket()
 
+    # Get Products from string
+    for letter in skus:
+        if letter == item_a.sku:
+            basket.add_product(item_a)
+        elif letter == item_b.sku:
+            basket.add_product(item_b)
+        elif letter == item_c.sku:
+            basket.add_product(item_c)
+        elif letter == item_d.sku:
+            basket.add_product(item_d)
+        elif letter == item_e.sku:
+            basket.add_product(item_e)
+        else:
+            return -1
+    
+    a_discount_1 = BulkDiscount(item_a, 3, 130)
+    a_discount_2 = BulkDiscount(item_a, 5, 200)
+    b_discount_1 = BulkDiscount(item_b, 2, 45)
+    e_discount = FreeItemDiscount(item_e, 2, item_b)
 
+    checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount])
+    checkout.run_analysis()
 
-    # # Add Product A Offers
-    # offer_a1 = Offer(3, 130)
-    # offer_a2 = Offer(5, 200)
-    # product_a.add_offer(offer_a1)
-    # product_a.add_offer(offer_a2)
+    return int(checkout.total_price())
+        
 
-    # # Add Product B Offers
-    # offer_b1 = Offer(2, 45)
-    # product_b.add_offer(offer_b1)
-
-    # # Add Product E Offers
-    # offer_e = Offer(2, 0, free_sku='B')
-    # product_e.add_offer(offer_e)
-
-
-    # # Define all products to checkout
-    # products = {"A": product_a, 
-    #             "B": product_b,
-    #             "C": product_c,
-    #             "D": product_d,
-    #             "E": product_e
-    # }
-
-    # # Checkout
-    # checkout_instance = Checkout(products)
-
-    # total = checkout_instance.calculate_total(skus)
-
-    # return total
 print(checkout("A"))
+
 
 
 
