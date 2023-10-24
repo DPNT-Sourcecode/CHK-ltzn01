@@ -1,3 +1,8 @@
+from abc import ABC, abstractmethod
+from typing import List, Optional, Dict, Set
+import copy
+from items import Item, Basket
+
 
 class DiscountStrategy(ABC):
     """
@@ -131,3 +136,4 @@ class FreeItemDiscount(DiscountStrategy):
             discounted_item_copy.discounted_price = 0
             discounted_item_copy.discounted = True
             basket.add_product(discounted_item_copy)
+
