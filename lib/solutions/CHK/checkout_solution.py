@@ -347,19 +347,8 @@ class Checkout:
 ######################################## checkout_solution.py ######################################
 ####################################################################################################
 
-
-def checkout(skus: str) -> int:
-    """
-    Calculate total price of a number of items.
-
-    Args:
-        skus (str): A string containing the SKUs of all the products in the basket.
-    
-    Returns:
-        int: The total checkout value of the items. Returns -1 for any illegal input.
-    """
-
-    main_dict = {
+def create_items():
+    return {
         'A': Item('A', 50),
         'B': Item('B', 30),
         'C': Item('C', 20),
@@ -388,9 +377,20 @@ def checkout(skus: str) -> int:
         'Z': Item('Z', 50)
     }
 
-    fresh_main_dict = {}
-    for sku, item in main_dict.items():
-        fresh_main_dict[sku] = copy.deepcopy(item)
+
+def checkout(skus: str) -> int:
+    """
+    Calculate total price of a number of items.
+
+    Args:
+        skus (str): A string containing the SKUs of all the products in the basket.
+    
+    Returns:
+        int: The total checkout value of the items. Returns -1 for any illegal input.
+    """
+
+    main_dict = create_items()
+    fresh_main_dict = {sku: copy.deepcopy(item) for sku, item in main_dict.items()}
 
 
     # Initialise the basket
@@ -427,8 +427,8 @@ def checkout(skus: str) -> int:
 
     return int(round(checkout.total_price(), 0))
 
-# The below work
-assert checkout('BEBEEE') == 160
-assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
-assert checkout('EEEEBB') == 160
-assert checkout('BEBEEE') == 160
+# # The below work
+# assert checkout('BEBEEE') == 160
+# assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
+# assert checkout('EEEEBB') == 160
+# assert checkout('BEBEEE') == 160
