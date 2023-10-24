@@ -442,7 +442,7 @@ def checkout(skus: str) -> int:
     h_discount_1 = BulkDiscount(item_h, 5, 45)
     h_discount_2 = BulkDiscount(item_h, 10, 80)
     k_discount_1 = BulkDiscount(item_k, 2, 150)
-    n_discount_1 = BulkDiscount(item_n, 3, item_m)
+    n_discount_1 = BulkDiscount(item_n, 3, 120)
     p_discount_1 = BulkDiscount(item_p, 5, 200)
     q_discount_1 = BulkDiscount(item_q, 3, 80)
     r_discount_1 = FreeItemDiscount(item_r, 3, item_q)
@@ -458,7 +458,9 @@ def checkout(skus: str) -> int:
 
     return int(round(checkout.total_price(), 0))
 
-assert checkout('NNN') == 120
+assert checkout("LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH") == 180
+
+
 
 
 
