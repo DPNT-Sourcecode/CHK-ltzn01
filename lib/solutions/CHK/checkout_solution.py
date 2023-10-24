@@ -327,6 +327,7 @@ def checkout(skus: str) -> int:
     item_c = Item('C', 20)
     item_d = Item('D', 15)
     item_e = Item('E', 40)
+    item_f = Item('F', 10)
 
     # Initialise the basket
     basket = Basket()
@@ -343,17 +344,22 @@ def checkout(skus: str) -> int:
             basket.add_product(item_d)
         elif letter == item_e.sku:
             basket.add_product(item_e)
+        elif letter == item_f.sku:
+            basket.add_product(item_f)
         else:
             return -1
     
+    # Define Discount Strategies
     a_discount_1 = BulkDiscount(item_a, 3, 130)
     a_discount_2 = BulkDiscount(item_a, 5, 200)
     b_discount_1 = BulkDiscount(item_b, 2, 45)
     e_discount = FreeItemDiscount(item_e, 2, item_b)
+    f_discount_1 = FreeItemDiscount(item_f, 2, item_f)
 
-    checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount])
+    checkout = Checkout(basket, BruteForceAnalysis(), [a_discount_1, a_discount_2, b_discount_1, e_discount, f_discount_1])
     checkout.run_analysis()
 
     return int(round(checkout.total_price(), 0))
+
 
 
