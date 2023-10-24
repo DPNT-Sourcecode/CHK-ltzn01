@@ -386,8 +386,8 @@ def checkout(skus: str) -> int:
         basket.add_product(main_dict[sku])
 
     discount_strategies = [
-        BulkDiscount(main_dict['A'], 5, 200),
         BulkDiscount(main_dict['A'], 3, 130),
+        BulkDiscount(main_dict['A'], 5, 200),
         BulkDiscount(main_dict['B'], 2, 45),
         FreeItemDiscount(main_dict['E'], 2, main_dict['B']),
         FreeItemDiscount(main_dict['F'], 2, main_dict['F']),
@@ -412,5 +412,4 @@ def checkout(skus: str) -> int:
     return int(round(checkout.total_price(), 0))
 
 
-
-
+assert checkout('LGCKAQXFOSKZGIWHNRNDITVBUUEOZXPYAVFDEPTBMQLYJRSMJCWH') == 1880
