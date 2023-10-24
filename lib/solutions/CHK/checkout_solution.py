@@ -281,7 +281,7 @@ class BruteForceAnalysis(Analysis):
             A boolean indicating if relevant
         """
         for product in basket.products:
-            if discount_strategy.is_applicable(product):
+            if discount_strategy.is_applicable(basket):
                 return True
         return False
 
@@ -457,11 +457,6 @@ def checkout(skus: str) -> int:
     checkout.run_analysis()
 
     return int(round(checkout.total_price(), 0))
-
-
-assert checkout("PPPPP") == 200
-
-
 
 
 
