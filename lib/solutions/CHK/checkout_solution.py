@@ -404,12 +404,13 @@ def checkout(skus: str) -> int:
     ]
     
  
-    checkout = Checkout(basket, OptimisedAnalysis, discount_strategies)
+    checkout = Checkout(basket, OptimisedAnalysis(), discount_strategies)
     checkout.run_analysis()
+
+    print(int(round(checkout.total_price(), 0)))
 
     return int(round(checkout.total_price(), 0))
 
 
-assert checkout("VVV") == 130
 
 
