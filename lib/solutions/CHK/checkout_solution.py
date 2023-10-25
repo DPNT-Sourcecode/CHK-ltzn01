@@ -183,8 +183,8 @@ class FreeItemDiscount(DiscountStrategy):
             trigger_quantity: The quantity of trigger items required to trigger the discount.
             discounted_item: The item that is discounted.
         """
-        super().__init__(item, trigger_quantity)
         self.discounted_item = discounted_item
+        super().__init__(item, trigger_quantity)
     
     def is_applicable(self, basket: Basket) -> bool:
         """
@@ -221,6 +221,15 @@ class FreeItemDiscount(DiscountStrategy):
             discounted_item_copy.discounted_price = 0
             discounted_item_copy.discounted = True
             basket.add_product(discounted_item_copy)
+    
+    def calculate_magnitude(self) -> float:
+        """
+        calculate the magnitude of the discount
+        
+        Returns:
+            The magnitude of the discount
+        """
+        return self.discounted_item.price
 
 
 ####################################################################################################
@@ -250,36 +259,7 @@ class Analysis(ABC):
 class OptimisedAnalysis(Analysis):
 
     @staticmethod
-    def categorise_discount_strategies(discount_strategies: List[DiscountStrategy]) -> Dict[str, List[DiscountStrategy]]:
-        """
-        Catergorise the discount strategies based in the items they affect.
-
-        Args:
-            discount_strategies: List of discount strategies.
-        """
-        strategies_dict = {}
-        for strategy in sorted(discount_strategies, key=lambda x: x.trigger_quantity, reverse=True):
-            letter = strategy.letter_affected
-            if letter not in strategies_dict:
-                strategies_dict[letter] = []
-            strategies_dict[letter].append(strategy)
-        return strategies_dict
-    
-    @staticmethod
-    def get_basket_letters(basket: Basket) -> Set[str]:
-        """
-        Get a set of unique letters representing items in the basket.
-
-        Args:
-            basket: The basket of items.
-        
-        Returns:
-            A set of unique letters
-        """
-        return {product.sku for product in basket.products}
-
-    @staticmethod
-    def apply_discounts(basket: Basket, strategies_dict: Dict[str, List[DiscountStrategy]], basket_letters: Set[str]) -> Basket:
+    def apply_discounts(basket: Basket, discount_strategies_sorted: List[DiscountStrategy]) -> Basket:
         """
         Apply discount strategies to the basket.
 
@@ -291,12 +271,11 @@ class OptimisedAnalysis(Analysis):
         Returns:
             The basket after applying the discounts.
         """
-        for letter in basket_letters:
-            if letter in strategies_dict:
-                for strategy in strategies_dict[letter]:
-                    while strategy.is_applicable(basket):
-                        strategy.apply_discount(basket)
-        return basket
+        # Iterate through the discount strategies
+        for discount_strategy in discount_strategies_sorted:
+            # while the discount strategy is applicable, apply it to the basket
+            while discount_strategy.is_applicable(basket):
+                discount_strategy.apply_discount(basket)
 
     def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
         """
@@ -439,3 +418,4 @@ def checkout(skus: str) -> int:
     print(int(round(checkoutObject.total_price(), 0)))
 
     return int(round(checkoutObject.total_price(), 0))
+
