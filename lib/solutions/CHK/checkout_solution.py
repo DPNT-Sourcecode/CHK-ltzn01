@@ -276,6 +276,7 @@ class OptimisedAnalysis(Analysis):
             # while the discount strategy is applicable, apply it to the basket
             while discount_strategy.is_applicable(basket):
                 discount_strategy.apply_discount(basket)
+        return basket
 
     def run(self, basket: Basket, discount_strategies: List[DiscountStrategy]) -> Basket:
         """
@@ -288,10 +289,10 @@ class OptimisedAnalysis(Analysis):
         Returns:
             The basket after the analysis has been run.
         """
-        strategies_dict = self.categorise_discount_strategies(discount_strategies)
-        basket.products.sort(key=lambda x: x.sku)
-        basket_letters = self.get_basket_letters(basket)
-        return self.apply_discounts(basket, strategies_dict, basket_letters)
+        # Take the discount strategies and sort them by magnitude, with the largest first
+        discount_strategies_sorted = sorted(discount_strategies, key=lambda x: x.magnitude, reverse=True)
+        basket = self.apply_discounts(basket, discount_strategies_sorted)
+        return basket
 
 
 ####################################################################################################
@@ -339,8 +340,18 @@ class CheckoutProcess:
 ######################################## checkout_solution.py ######################################
 ####################################################################################################
 
-def create_items():
-    return {
+def checkout(skus: str) -> int:
+    """
+    Calculate total price of a number of items.
+
+    Args:
+        skus (str): A string containing the SKUs of all the products in the basket.
+    
+    Returns:
+        int: The total checkout value of the items. Returns -1 for any illegal input.
+    """
+
+    main_dict = {
         'A': Item('A', 50),
         'B': Item('B', 30),
         'C': Item('C', 20),
@@ -370,28 +381,13 @@ def create_items():
     }
 
 
-def checkout(skus: str) -> int:
-    """
-    Calculate total price of a number of items.
-
-    Args:
-        skus (str): A string containing the SKUs of all the products in the basket.
-    
-    Returns:
-        int: The total checkout value of the items. Returns -1 for any illegal input.
-    """
-
-    main_dict = create_items()
-    fresh_main_dict = {sku: copy.deepcopy(item) for sku, item in main_dict.items()}
-
-
     # Initialise the basket
     basket = Basket()
 
     for sku in skus:
-        if sku not in fresh_main_dict:
+        if sku not in main_dict:
             return -1
-        basket.add_product(fresh_main_dict[sku])
+        basket.add_product(main_dict[sku])
 
     discount_strategies = [
         BulkDiscount(main_dict['A'], 3, 130),
@@ -418,4 +414,10 @@ def checkout(skus: str) -> int:
     print(int(round(checkoutObject.total_price(), 0)))
 
     return int(round(checkoutObject.total_price(), 0))
+
+print(checkout('BEBEEE') == 160)
+print(checkout('EEEEBB') == 160)
+print(checkout('ABCDEABCDE') == 280)
+print(checkout('AAAAA') == 200)
+print(checkout('HHH') == 30)
 
