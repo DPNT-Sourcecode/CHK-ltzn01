@@ -248,6 +248,7 @@ class ComboDiscount(DiscountStrategy):
         self.items = items
         self.combo_price = combo_price
         super().__init__(items[0], trigger_quantity)
+        self.letters_affected = set(item.sku for item in items)
 
     def is_applicable(self, basket: Basket) -> bool:
         """
@@ -261,7 +262,7 @@ class ComboDiscount(DiscountStrategy):
         """
         trigger_count = 0
         for product in basket.products:
-            if product.sku in self.letter_affected and not product.discounted:
+            if product.sku in self.letters_affected and not product.discounted:
                 trigger_count += 1
         return trigger_count >= self.trigger_quantity
 
@@ -277,7 +278,7 @@ class ComboDiscount(DiscountStrategy):
         
         applicable_items = []
         for product in basket.products:
-            if product.sku in self.letter_affected and not product.discounted:
+            if product.sku in self.letters_affected and not product.discounted:
                 applicable_items.append(product)
         
         # Sort the items based on price in descending order for maximum effect
@@ -484,5 +485,5 @@ def checkout(skus: str) -> int:
 
     return int(round(checkoutObject.total_price(), 0))
 
-assert checkout('STX') == 50
+assert checkout('STX') == 45
 
