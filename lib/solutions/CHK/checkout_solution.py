@@ -232,6 +232,62 @@ class FreeItemDiscount(DiscountStrategy):
         return self.discounted_item.price
 
 
+class ComboDiscount(DiscountStrategy):
+    """
+    Discount strategy for buying a combination of items for a specific price
+    """
+
+    def __init__(self, items: List[Item], combo_price: float, trigger_quantity: int):
+        """
+        Initialise the combo discount.
+
+        Args:
+            items: A list of items that trigger the discount.
+            combo_price: The price of the combo.
+        """
+        self.items = items
+        self.combo_price = combo_price
+        super().__init__(items[0], trigger_quantity)
+
+    def is_applicable(self, basket: Basket) -> bool:
+        """
+        Check if the combo discount is applicable.
+
+        Args:
+            basket: The basket to check for applicability.
+        
+        Returns:
+            A boolean indicating whether the discount is applicable.
+        """
+        trigger_count = 0
+        for product in basket.products:
+            if product.sku in self.letter_affected and not product.discounted:
+                trigger_count += 1
+        return trigger_count >= self.trigger_quantity
+
+    def apply_discount(self, basket: Basket) -> None:
+        """
+        Apply the combo discount.
+
+        Args:
+            basket: The basket to apply the discount to.
+        """
+        if not self.is_applicable(basket):
+            return
+        
+        applicable_items = []
+        for product in basket.products:
+            if product.sku in self.letter_affected and not product.discounted:
+                applicable_items.append(product)
+        
+        # Sort the items based on price in descending order for maximum effect
+        applicable_items.sort(key=lambda x: x.price, reverse=True)
+
+        for i in range(self.trigger_quantity):
+            applicable_items[i].discounted_price = self.combo_price / self.trigger_quantity
+            applicable_items[i].discounted = True
+
+
 ####################################################################################################
 ############################################ analysis.py ###########################################
 ####################################################################################################
