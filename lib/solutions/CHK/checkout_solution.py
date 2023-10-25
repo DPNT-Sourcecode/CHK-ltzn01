@@ -89,6 +89,7 @@ class DiscountStrategy(ABC):
         self.item = item
         self.trigger_quantity = trigger_quantity
         self.letter_affected = item.sku
+        self.magnitude = self.calculate_magnitude()
 
     @abstractmethod
     def is_applicable(self, basket: 'Basket') -> bool:
@@ -104,6 +105,13 @@ class DiscountStrategy(ABC):
         """
         pass
 
+    @abstractmethod
+    def calculate_magnitude(self) -> float:
+        """
+        Method to calculate the magnitude of the discount
+        """
+        pass
+
 class BulkDiscount(DiscountStrategy):
     """
     Applies a bulk discount based on specific quantity
@@ -115,9 +123,9 @@ class BulkDiscount(DiscountStrategy):
     """
 
     def __init__(self, item: Item, trigger_quantity: int, bulk_price: float):
-        super().__init__(item, trigger_quantity)
         self.bulk_price = bulk_price
-        self.letter_affected = item.sku
+        super().__init__(item, trigger_quantity)
+        
     
     def is_applicable(self, basket: Basket) -> bool:
         """
@@ -149,6 +157,11 @@ class BulkDiscount(DiscountStrategy):
                     product.discounted_price = self.bulk_price / self.trigger_quantity
                     product.discounted = True
                     num_changed += 1
+    
+    def calculate_magnitude(self) -> float:
+        orginal_price = self.item.price * self.trigger_quantity
+        discounted_price = self.bulk_price
+        return orginal_price - discounted_price
 
 
 class FreeItemDiscount(DiscountStrategy):
