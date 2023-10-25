@@ -484,6 +484,3 @@ def checkout(skus: str) -> int:
     print(int(round(checkoutObject.total_price(), 0)))
 
     return int(round(checkoutObject.total_price(), 0))
-
-assert checkout('STX') == 45
-
