@@ -418,7 +418,7 @@ def checkout(skus: str) -> int:
         'H': Item('H', 10),
         'I': Item('I', 35),
         'J': Item('J', 60),
-        'K': Item('K', 80),
+        'K': Item('K', 70),
         'L': Item('L', 90),
         'M': Item('M', 15),
         'N': Item('N', 40),
@@ -431,9 +431,9 @@ def checkout(skus: str) -> int:
         'U': Item('U', 40),
         'V': Item('V', 50),
         'W': Item('W', 20),
-        'X': Item('X', 90),
-        'Y': Item('Y', 10),
-        'Z': Item('Z', 50)
+        'X': Item('X', 17),
+        'Y': Item('Y', 20),
+        'Z': Item('Z', 21)
     }
 
 
@@ -453,14 +453,15 @@ def checkout(skus: str) -> int:
         FreeItemDiscount(main_dict['F'], 2, main_dict['F']),
         BulkDiscount(main_dict['H'], 5, 45),
         BulkDiscount(main_dict['H'], 10, 80),
-        BulkDiscount(main_dict['K'], 2, 150),
+        BulkDiscount(main_dict['K'], 2, 120),
         FreeItemDiscount(main_dict['N'], 3, main_dict['M']),
         BulkDiscount(main_dict['P'], 5, 200),
         BulkDiscount(main_dict['Q'], 3, 80),
         FreeItemDiscount(main_dict['R'], 3, main_dict['Q']),
         FreeItemDiscount(main_dict['U'], 3, main_dict['U']),
         BulkDiscount(main_dict['V'], 2, 90),
-        BulkDiscount(main_dict['V'], 3, 130)
+        BulkDiscount(main_dict['V'], 3, 130),
+        ComboDiscount([main_dict['S'], main_dict['T'], main_dict['X'], main_dict['Y'], main_dict['Z']], 45, 3)
     ]
     
  
@@ -470,3 +471,5 @@ def checkout(skus: str) -> int:
     print(int(round(checkoutObject.total_price(), 0)))
 
     return int(round(checkoutObject.total_price(), 0))
+
+assert checkout('STX') == 50
