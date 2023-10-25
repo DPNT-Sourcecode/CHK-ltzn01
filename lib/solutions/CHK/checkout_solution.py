@@ -286,6 +286,18 @@ class ComboDiscount(DiscountStrategy):
         for i in range(self.trigger_quantity):
             applicable_items[i].discounted_price = self.combo_price / self.trigger_quantity
             applicable_items[i].discounted = True
+    
+    def calculate_magnitude(self) -> float:
+        """
+        Calculate the magnitude of the discount.
+
+        Returns:
+            The magnitude of the discount.
+        """
+        orginal_price = sum(item.price for item in self.items)
+        average_price = orginal_price / len(self.items)
+        discount_per_item = average_price - (self.combo_price / self.trigger_quantity)
+        return discount_per_item * self.trigger_quantity
 
 
 ####################################################################################################
@@ -473,3 +485,4 @@ def checkout(skus: str) -> int:
     return int(round(checkoutObject.total_price(), 0))
 
 assert checkout('STX') == 50
+
