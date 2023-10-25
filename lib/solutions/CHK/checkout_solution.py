@@ -439,7 +439,7 @@ def checkout(skus: str) -> int:
         'P': Item('P', 50),
         'Q': Item('Q', 30),
         'R': Item('R', 50),
-        'S': Item('S', 30),
+        'S': Item('S', 20),
         'T': Item('T', 20),
         'U': Item('U', 40),
         'V': Item('V', 50),
@@ -484,3 +484,7 @@ def checkout(skus: str) -> int:
     print(int(round(checkoutObject.total_price(), 0)))
 
     return int(round(checkoutObject.total_price(), 0))
+
+assert checkout('K') == 70
+assert checkout('S') == 20
+assert checkout('X') == 17
