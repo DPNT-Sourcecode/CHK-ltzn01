@@ -415,9 +415,3 @@ def checkout(skus: str) -> int:
 
     return int(round(checkoutObject.total_price(), 0))
 
-print(checkout('BEBEEE') == 160)
-print(checkout('EEEEBB') == 160)
-print(checkout('ABCDEABCDE') == 280)
-print(checkout('AAAAA') == 200)
-print(checkout('HHH') == 30)
-
